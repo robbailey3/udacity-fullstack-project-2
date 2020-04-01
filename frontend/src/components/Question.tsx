@@ -1,5 +1,5 @@
 import * as React from "react";
-import "../stylesheets/Question.css";
+import "../stylesheets/Question.scss";
 
 class Question extends React.Component {
   public state: any;

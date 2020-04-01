@@ -1,6 +1,6 @@
 import * as React from "react";
 // import logo from "../logo.svg";
-import "../stylesheets/Header.css";
+import "../stylesheets/Header.scss";
 
 class Header extends React.Component {
   navTo(uri) {

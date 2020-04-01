@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import "../stylesheets/App.css";
+import "../stylesheets/App.scss";
 import Question from "./Question";
 import Search from "./Search";
 
@@ -22,23 +22,23 @@ class QuestionView extends React.Component {
   }
 
   getQuestions = () => {
-    $.ajax({
-      url: `/questions?page=${this.state.page}`, //TODO: update request URL
-      type: "GET",
-      success: result => {
-        this.setState({
-          questions: result.questions,
-          totalQuestions: result.total_questions,
-          categories: result.categories,
-          currentCategory: result.current_category
-        });
-        return;
-      },
-      error: error => {
-        alert("Unable to load questions. Please try your request again");
-        return;
-      }
-    });
+    // $.ajax({
+    //   url: `/questions?page=${this.state.page}`, //TODO: update request URL
+    //   type: "GET",
+    //   success: result => {
+    //     this.setState({
+    //       questions: result.questions,
+    //       totalQuestions: result.total_questions,
+    //       categories: result.categories,
+    //       currentCategory: result.current_category
+    //     });
+    //     return;
+    //   },
+    //   error: error => {
+    //     alert("Unable to load questions. Please try your request again");
+    //     return;
+    //   }
+    // });
   };
 
   selectPage(num) {
@@ -65,64 +65,64 @@ class QuestionView extends React.Component {
   }
 
   getByCategory = id => {
-    $.ajax({
-      url: `/categories/${id}/questions`, //TODO: update request URL
-      type: "GET",
-      success: result => {
-        this.setState({
-          questions: result.questions,
-          totalQuestions: result.total_questions,
-          currentCategory: result.current_category
-        });
-        return;
-      },
-      error: error => {
-        alert("Unable to load questions. Please try your request again");
-        return;
-      }
-    });
+    // $.ajax({
+    //   url: `/categories/${id}/questions`, //TODO: update request URL
+    //   type: "GET",
+    //   success: result => {
+    //     this.setState({
+    //       questions: result.questions,
+    //       totalQuestions: result.total_questions,
+    //       currentCategory: result.current_category
+    //     });
+    //     return;
+    //   },
+    //   error: error => {
+    //     alert("Unable to load questions. Please try your request again");
+    //     return;
+    //   }
+    // });
   };
 
   submitSearch = searchTerm => {
-    $.ajax({
-      url: `/questions`, //TODO: update request URL
-      type: "POST",
-      dataType: "json",
-      contentType: "application/json",
-      data: JSON.stringify({ searchTerm: searchTerm }),
-      xhrFields: {
-        withCredentials: true
-      },
-      crossDomain: true,
-      success: result => {
-        this.setState({
-          questions: result.questions,
-          totalQuestions: result.total_questions,
-          currentCategory: result.current_category
-        });
-        return;
-      },
-      error: error => {
-        alert("Unable to load questions. Please try your request again");
-        return;
-      }
-    });
+    // $.ajax({
+    //   url: `/questions`, //TODO: update request URL
+    //   type: "POST",
+    //   dataType: "json",
+    //   contentType: "application/json",
+    //   data: JSON.stringify({ searchTerm: searchTerm }),
+    //   xhrFields: {
+    //     withCredentials: true
+    //   },
+    //   crossDomain: true,
+    //   success: result => {
+    //     this.setState({
+    //       questions: result.questions,
+    //       totalQuestions: result.total_questions,
+    //       currentCategory: result.current_category
+    //     });
+    //     return;
+    //   },
+    //   error: error => {
+    //     alert("Unable to load questions. Please try your request again");
+    //     return;
+    //   }
+    // });
   };
 
   questionAction = id => action => {
     if (action === "DELETE") {
       if (window.confirm("are you sure you want to delete the question?")) {
-        $.ajax({
-          url: `/questions/${id}`, //TODO: update request URL
-          type: "DELETE",
-          success: result => {
-            this.getQuestions();
-          },
-          error: error => {
-            alert("Unable to load questions. Please try your request again");
-            return;
-          }
-        });
+        // $.ajax({
+        //   url: `/questions/${id}`, //TODO: update request URL
+        //   type: "DELETE",
+        //   success: result => {
+        //     this.getQuestions();
+        //   },
+        //   error: error => {
+        //     alert("Unable to load questions. Please try your request again");
+        //     return;
+        //   }
+        // });
       }
     }
   };

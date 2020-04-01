@@ -1,3 +1,4 @@
+const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
@@ -21,20 +22,64 @@ module.exports = {
         use: { loader: "ts-loader" },
         exclude: /node_modules/
       },
-
-      // addition - add source-map support
       {
-        enforce: "pre",
-        test: /\.js$/,
-        exclude: /node_modules/,
-        loader: "source-map-loader"
+        test: /\.(s*)css$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          "css-loader",
+          "postcss-loader",
+          "sass-loader"
+        ],
+        exclude: /node_modules/
+      },
+      {
+        test: /\.(jpe?g|png|gif|svg)$/i,
+        loader: "file-loader"
       }
     ]
   },
-  externals: {
-    react: "React",
-    "react-dom": "ReactDOM"
-  },
+  // externals: {
+  //   react: "React",
+  //   "react-dom": "ReactDOM"
+  // },
   // addition - add source-map support
-  devtool: "source-map"
+  devtool: "source-map",
+  output: {
+    filename: "[name].[hash].js",
+    path: path.resolve(__dirname, "dist")
+  },
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        styles: {
+          name: "styles",
+          test: /\.css$/,
+          chunks: "all",
+          enforce: true
+        },
+        vendors: {
+          test: /[\\/]node_modules[\\/]/,
+          priority: -10
+        }
+      }
+    }
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: "src/index.html",
+      filename: "index.html",
+      chunksSortMode: "auto",
+      chunks: ["main"]
+    }),
+    new CleanWebpackPlugin(),
+    new CopyPlugin([
+      {
+        from: "public",
+        to: "dist/public"
+      }
+    ]),
+    new MiniCssExtractPlugin({
+      filename: "[name].[hash].css"
+    })
+  ]
 };

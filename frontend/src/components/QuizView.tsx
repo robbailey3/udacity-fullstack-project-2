@@ -1,7 +1,6 @@
 import * as React from "react";
-import $ from "jquery";
 
-import "../stylesheets/QuizView.css";
+import "../stylesheets/QuizView.scss";
 
 const questionsPerPlay = 5;
 
@@ -22,18 +21,18 @@ class QuizView extends React.Component {
   }
 
   componentDidMount() {
-    $.ajax({
-      url: `/categories`, //TODO: update request URL
-      type: "GET",
-      success: result => {
-        this.setState({ categories: result.categories });
-        return;
-      },
-      error: error => {
-        alert("Unable to load categories. Please try your request again");
-        return;
-      }
-    });
+    // $.ajax({
+    //   url: `/categories`, //TODO: update request URL
+    //   type: "GET",
+    //   success: result => {
+    //     this.setState({ categories: result.categories });
+    //     return;
+    //   },
+    //   error: error => {
+    //     alert("Unable to load categories. Please try your request again");
+    //     return;
+    //   }
+    // });
   }
 
   selectCategory = ({ type, id = 0 }) => {
@@ -50,34 +49,34 @@ class QuizView extends React.Component {
       previousQuestions.push(this.state.currentQuestion.id);
     }
 
-    $.ajax({
-      url: "/quizzes", //TODO: update request URL
-      type: "POST",
-      dataType: "json",
-      contentType: "application/json",
-      data: JSON.stringify({
-        previous_questions: previousQuestions,
-        quiz_category: this.state.quizCategory
-      }),
-      xhrFields: {
-        withCredentials: true
-      },
-      crossDomain: true,
-      success: result => {
-        this.setState({
-          showAnswer: false,
-          previousQuestions: previousQuestions,
-          currentQuestion: result.question,
-          guess: "",
-          forceEnd: result.question ? false : true
-        });
-        return;
-      },
-      error: error => {
-        alert("Unable to load question. Please try your request again");
-        return;
-      }
-    });
+    // $.ajax({
+    //   url: "/quizzes", //TODO: update request URL
+    //   type: "POST",
+    //   dataType: "json",
+    //   contentType: "application/json",
+    //   data: JSON.stringify({
+    //     previous_questions: previousQuestions,
+    //     quiz_category: this.state.quizCategory
+    //   }),
+    //   xhrFields: {
+    //     withCredentials: true
+    //   },
+    //   crossDomain: true,
+    //   success: result => {
+    //     this.setState({
+    //       showAnswer: false,
+    //       previousQuestions: previousQuestions,
+    //       currentQuestion: result.question,
+    //       guess: "",
+    //       forceEnd: result.question ? false : true
+    //     });
+    //     return;
+    //   },
+    //   error: error => {
+    //     alert("Unable to load question. Please try your request again");
+    //     return;
+    //   }
+    // });
   };
 
   submitGuess = event => {
@@ -112,11 +111,11 @@ class QuizView extends React.Component {
           <div className="play-category" onClick={this.selectCategory}>
             ALL
           </div>
-          {Object.keys(this.state.categories).map(id => {
+          {Object.keys(this.state.categories).map((id: any) => {
             return (
               <div
                 key={id}
-                value={id}
+                // value={id}
                 className="play-category"
                 onClick={() =>
                   this.selectCategory({ type: this.state.categories[id], id })
