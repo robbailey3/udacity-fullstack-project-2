@@ -1,23 +1,46 @@
-import { Observable, Observer } from "rxjs";
-
+import { Observable, Observer } from 'rxjs';
+/**
+ *
+ * A class to handle HTTP Requests.
+ * This is just a wrapper to the browser fetch API.
+ * Each request returns an RxJS observable.
+ * @class HttpClient
+ */
 class HttpClient {
-  public get(url: string, options: HttpClientOptions = {}) {
+  public get(url: string, options: Partial<RequestInit> = {}) {
+    return this.makeRequest(url, 'GET', null, options);
+  }
+  public post(url: string, data: any, options: Partial<RequestInit> = {}) {
+    return this.makeRequest(url, 'POST', data, options);
+  }
+  public patch(url: string, data: any, options: Partial<RequestInit> = {}) {
+    return this.makeRequest(url, 'POST', data, options);
+  }
+  public put(url: string, data: any, options: Partial<RequestInit> = {}) {
+    return this.makeRequest(url, 'PUT', data, options);
+  }
+  public delete(url: string, data: any, options: Partial<RequestInit> = {}) {
+    return this.makeRequest(url, 'DELETE', data, options);
+  }
+  private makeRequest(
+    url: string,
+    method: string,
+    data?: any,
+    options: Partial<RequestInit> = {}
+  ) {
     return new Observable((observer: Observer<any>) => {
-      const xhr = new XMLHttpRequest();
-      xhr.open("GET", url);
-      xhr.onload = () => {
-        if (xhr.status === 200) {
-          observer.next(xhr.response);
-        } else {
-        }
-      };
+      fetch(url, { method, body: data, ...options })
+        .then((response: Response) => response.json())
+        .then(result => {
+          observer.next(result);
+          observer.complete();
+        })
+        .catch(err => {
+          observer.error(err);
+          observer.complete();
+        });
     });
   }
-  public post() {}
-  public patch() {}
-  public put() {}
-  public delete() {}
 }
 
-interface HttpClientOptions {}
 export const http = new HttpClient();

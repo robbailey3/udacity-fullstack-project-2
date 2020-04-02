@@ -1,19 +1,19 @@
-import * as React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import * as React from 'react';
+import FormView from './components/FormView';
+import Header from './components/Header';
+import QuestionView from './components/QuestionView';
+import QuizView from './components/QuizView';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import './stylesheets/App.scss';
 
 // import logo from './logo.svg';
-import "./stylesheets/App.scss";
-import FormView from "./components/FormView";
-import QuestionView from "./components/QuestionView";
-import Header from "./components/Header";
-import QuizView from "./components/QuizView";
 
-class App extends React.Component {
+export default class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <Header />
         <Router>
+          <Header />
           <Switch>
             <Route path="/" exact component={QuestionView} />
             <Route path="/add" component={FormView} />
@@ -25,5 +25,3 @@ class App extends React.Component {
     );
   }
 }
-
-export default App;

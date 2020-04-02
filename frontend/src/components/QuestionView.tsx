@@ -1,8 +1,8 @@
-import * as React from "react";
-
-import "../stylesheets/App.scss";
-import Question from "./Question";
-import Search from "./Search";
+import * as React from 'react';
+import Question from './Question';
+import Search from './Search';
+import { http } from '../utils/http-request';
+import '../stylesheets/App.scss';
 
 class QuestionView extends React.Component {
   public state: any;
@@ -15,6 +15,7 @@ class QuestionView extends React.Component {
       categories: {},
       currentCategory: null
     };
+    console.log(this);
   }
 
   componentDidMount() {
@@ -22,8 +23,31 @@ class QuestionView extends React.Component {
   }
 
   getQuestions = () => {
+    console.log('Getting questions');
+    http.get('https://robbailey3.co.uk/api/blog').subscribe({
+      next: result => {
+        console.log({ result });
+      }
+    });
+    http.get(`/questions?page=${this.state.page}`).subscribe({
+      next: result => {
+        this.setState({
+          questions: result.questions,
+          totalQuestions: result.total_questions,
+          categories: result.categories,
+          currentCategory: result.current_category
+        });
+      },
+      error: (err: Error) => {
+        alert(
+          'Unable to load questions. Please try your request again\n' +
+            err.message
+        );
+        console.log(err);
+      }
+    });
     // $.ajax({
-    //   url: `/questions?page=${this.state.page}`, //TODO: update request URL
+    //   url: , //TODO: update request URL
     //   type: "GET",
     //   success: result => {
     //     this.setState({
@@ -52,7 +76,7 @@ class QuestionView extends React.Component {
       pageNumbers.push(
         <span
           key={i}
-          className={`page-num ${i === this.state.page ? "active" : ""}`}
+          className={`page-num ${i === this.state.page ? 'active' : ''}`}
           onClick={() => {
             this.selectPage(i);
           }}
@@ -110,8 +134,8 @@ class QuestionView extends React.Component {
   };
 
   questionAction = id => action => {
-    if (action === "DELETE") {
-      if (window.confirm("are you sure you want to delete the question?")) {
+    if (action === 'DELETE') {
+      if (window.confirm('are you sure you want to delete the question?')) {
         // $.ajax({
         //   url: `/questions/${id}`, //TODO: update request URL
         //   type: "DELETE",

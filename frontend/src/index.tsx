@@ -1,11 +1,10 @@
-import * as React from "react";
-import * as ReactDOM from "react-dom";
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
+import * as serviceWorker from './serviceWorker.js';
+import App from './App';
+import './stylesheets/index.scss';
 
-import "./stylesheets/index.scss";
-import App from "./App";
-import * as serviceWorker from "./serviceWorker";
-
-ReactDOM.render(<App />, document.getElementById("root"));
+ReactDOM.render(<App />, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

@@ -1,8 +1,9 @@
-import * as React from "react";
+import * as React from 'react';
+import { Link, Router } from 'react-router-dom';
+import '../stylesheets/Header.scss';
 // import logo from "../logo.svg";
-import "../stylesheets/Header.scss";
 
-class Header extends React.Component {
+export default class Header extends React.Component {
   navTo(uri) {
     window.location.href = window.location.origin + uri;
   }
@@ -10,37 +11,19 @@ class Header extends React.Component {
   render() {
     return (
       <div className="App-header">
-        <h1
-          onClick={() => {
-            this.navTo("");
-          }}
-        >
-          Udacitrivia
-        </h1>
-        <h2
-          onClick={() => {
-            this.navTo("");
-          }}
-        >
-          List
-        </h2>
-        <h2
-          onClick={() => {
-            this.navTo("/add");
-          }}
-        >
-          Add
-        </h2>
-        <h2
-          onClick={() => {
-            this.navTo("/play");
-          }}
-        >
-          Play
-        </h2>
+        <Link to="/">
+          <span className="logo">Udacitrivia</span>
+        </Link>
+        <Link to="/">
+          <h2>List</h2>
+        </Link>
+        <Link to="/add">
+          <h2>Add</h2>
+        </Link>
+        <Link to="/play">
+          <h2>Play</h2>
+        </Link>
       </div>
     );
   }
 }
-
-export default Header;
