@@ -10,18 +10,24 @@ class HttpClient {
   public get(url: string, options: Partial<RequestInit> = {}) {
     return this.makeRequest(url, 'GET', null, options);
   }
+
   public post(url: string, data: any, options: Partial<RequestInit> = {}) {
     return this.makeRequest(url, 'POST', data, options);
   }
+
   public patch(url: string, data: any, options: Partial<RequestInit> = {}) {
     return this.makeRequest(url, 'POST', data, options);
   }
+
   public put(url: string, data: any, options: Partial<RequestInit> = {}) {
     return this.makeRequest(url, 'PUT', data, options);
   }
-  public delete(url: string, data: any, options: Partial<RequestInit> = {}) {
-    return this.makeRequest(url, 'DELETE', data, options);
+
+  public delete(url: string, options: Partial<RequestInit> = {}) {
+    return this.makeRequest(url, 'DELETE', options);
   }
+
+  // eslint-disable-next-line class-methods-use-this
   private makeRequest(
     url: string,
     method: string,
@@ -31,16 +37,16 @@ class HttpClient {
     return new Observable((observer: Observer<any>) => {
       fetch(url, { method, body: data, ...options })
         .then((response: Response) => response.json())
-        .then(result => {
+        .then((result) => {
           observer.next(result);
           observer.complete();
         })
-        .catch(err => {
+        .catch((err) => {
           observer.error(err);
           observer.complete();
         });
     });
   }
 }
-
-export const http = new HttpClient();
+const http = new HttpClient();
+export default http;

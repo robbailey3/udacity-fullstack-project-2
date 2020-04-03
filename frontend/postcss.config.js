@@ -7,7 +7,7 @@ module.exports = {
         "dollar-variables",
         "declarations",
         "at-rules",
-        "rules"
+        "rules",
       ],
       "properties-order": [
         "position",
@@ -16,8 +16,8 @@ module.exports = {
         "right",
         "bottom",
         "left",
-        "alphabetical"
-      ]
-    }
-  }
+        "alphabetical",
+      ],
+    },
+  },
 };

@@ -6,6 +6,7 @@ const questionsPerPlay = 5;
 
 class QuizView extends React.Component {
   public state: any;
+
   constructor(public props: any) {
     super(props);
     this.state = {
@@ -16,11 +17,12 @@ class QuizView extends React.Component {
       numCorrect: 0,
       currentQuestion: {},
       guess: "",
-      forceEnd: false
+      forceEnd: false,
     };
   }
 
   componentDidMount() {
+    this.getCategories();
     // $.ajax({
     //   url: `/categories`, //TODO: update request URL
     //   type: "GET",
@@ -35,11 +37,13 @@ class QuizView extends React.Component {
     // });
   }
 
+  public getCategories() {}
+
   selectCategory = ({ type, id = 0 }) => {
     this.setState({ quizCategory: { type, id } }, this.getNextQuestion);
   };
 
-  handleChange = event => {
+  handleChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
   };
 
@@ -79,15 +83,15 @@ class QuizView extends React.Component {
     // });
   };
 
-  submitGuess = event => {
+  submitGuess = (event) => {
     event.preventDefault();
     const formatGuess = this.state.guess
       .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "")
       .toLowerCase();
-    let evaluate = this.evaluateAnswer();
+    const evaluate = this.evaluateAnswer();
     this.setState({
       numCorrect: !evaluate ? this.state.numCorrect : this.state.numCorrect + 1,
-      showAnswer: true
+      showAnswer: true,
     });
   };
 
@@ -99,7 +103,7 @@ class QuizView extends React.Component {
       numCorrect: 0,
       currentQuestion: {},
       guess: "",
-      forceEnd: false
+      forceEnd: false,
     });
   };
 
@@ -118,8 +122,7 @@ class QuizView extends React.Component {
                 // value={id}
                 className="play-category"
                 onClick={() =>
-                  this.selectCategory({ type: this.state.categories[id], id })
-                }
+                  this.selectCategory({ type: this.state.categories[id], id })}
               >
                 {this.state.categories[id]}
               </div>
@@ -159,7 +162,7 @@ class QuizView extends React.Component {
     const formatGuess = this.state.guess
       .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "")
       .toLowerCase();
-    let evaluate = this.evaluateAnswer();
+    const evaluate = this.evaluateAnswer();
     return (
       <div className="quiz-play-holder">
         <div className="quiz-question">

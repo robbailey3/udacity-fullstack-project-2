@@ -9,5 +9,11 @@
     "downlevelIteration": true
   },
   "include": ["src/*.tsx", "src/**/*.ts"],
-  "exclude": ["*.test.tsx", "*.test.ts", "*.spec.tsx", "*.spec.ts"]
+  "exclude": [
+    "*.test.tsx",
+    "*.test.ts",
+    "*.spec.tsx",
+    "*.spec.ts",
+    "node_modules/"
+  ]
 }

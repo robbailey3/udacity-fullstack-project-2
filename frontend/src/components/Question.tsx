@@ -1,44 +1,52 @@
-import * as React from "react";
-import "../stylesheets/Question.scss";
+import * as React from 'react';
+import '../stylesheets/Question.scss';
+import PropTypes from 'prop-types';
 
 class Question extends React.Component {
-  public state: any;
-  public props: any;
-  constructor(props) {
+  constructor(public props: any, public state: React.ComponentState) {
     super(props);
     this.state = {
       visibleAnswer: false
     };
+    console.log(this);
   }
 
-  flipVisibility() {
-    this.setState({ visibleAnswer: !this.state.visibleAnswer });
+  public flipVisibility() {
+    const { visibleAnswer } = this.props;
+    this.setState({ visibleAnswer: !visibleAnswer });
   }
 
-  render() {
+  public render() {
     const { question, answer, category, difficulty } = this.props;
     return (
       <div className="Question-holder">
         <div className="Question">{question}</div>
         <div className="Question-status">
-          <img className="category" src={`${category}.svg`} />
-          <div className="difficulty">Difficulty: {difficulty}</div>
           <img
-            src="delete.png"
+            className="category"
+            src={`public/${category.type}.svg`}
+            alt={`${category.type}`}
+          />
+          <div className="difficulty">
+            Difficulty:
+            {difficulty}
+          </div>
+          <img
+            src="public/delete.png"
             className="delete"
-            onClick={() => this.props.questionAction("DELETE")}
+            onClick={() => this.props.questionAction('DELETE')}
           />
         </div>
         <div
           className="show-answer button"
           onClick={() => this.flipVisibility()}
         >
-          {this.state.visibleAnswer ? "Hide" : "Show"} Answer
+          {this.state.visibleAnswer ? 'Hide' : 'Show'} Answer
         </div>
         <div className="answer-holder">
           <span
             style={{
-              visibility: this.state.visibleAnswer ? "visible" : "hidden"
+              visibility: this.state.visibleAnswer ? 'visible' : 'hidden'
             }}
           >
             Answer: {answer}
@@ -48,5 +56,4 @@ class Question extends React.Component {
     );
   }
 }
-
 export default Question;
