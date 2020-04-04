@@ -1,6 +1,5 @@
 import * as React from 'react';
 import '../stylesheets/Question.scss';
-import PropTypes from 'prop-types';
 
 class Question extends React.Component {
   constructor(public props: any, public state: React.ComponentState) {
@@ -8,16 +7,25 @@ class Question extends React.Component {
     this.state = {
       visibleAnswer: false
     };
-    console.log(this);
   }
 
   public flipVisibility() {
-    const { visibleAnswer } = this.props;
+    const { visibleAnswer } = this.state;
     this.setState({ visibleAnswer: !visibleAnswer });
   }
 
   public render() {
-    const { question, answer, category, difficulty } = this.props;
+    // Using some destructuring assignments
+    const {
+      question,
+      answer,
+      category,
+      difficulty,
+      questionAction
+    } = this.props;
+
+    const { visibleAnswer } = this.state;
+
     return (
       <div className="Question-holder">
         <div className="Question">{question}</div>
@@ -27,26 +35,28 @@ class Question extends React.Component {
             src={`public/${category.type}.svg`}
             alt={`${category.type}`}
           />
-          <div className="difficulty">
-            Difficulty:
-            {difficulty}
-          </div>
-          <img
-            src="public/delete.png"
-            className="delete"
-            onClick={() => this.props.questionAction('DELETE')}
-          />
+          <div className="difficulty">Difficulty: {difficulty}</div>
+          <button onClick={() => questionAction('DELETE')} type="button">
+            <img src="public/delete.png" className="delete" alt="bin icon" />
+          </button>
         </div>
         <div
           className="show-answer button"
+          tabIndex={0}
           onClick={() => this.flipVisibility()}
+          onKeyUp={($event) => {
+            if ($event.key === 'Enter') {
+              this.flipVisibility();
+            }
+          }}
+          role="button"
         >
-          {this.state.visibleAnswer ? 'Hide' : 'Show'} Answer
+          {visibleAnswer ? 'Hide' : 'Show'} Answer
         </div>
         <div className="answer-holder">
           <span
             style={{
-              visibility: this.state.visibleAnswer ? 'visible' : 'hidden'
+              visibility: visibleAnswer ? 'visible' : 'hidden'
             }}
           >
             Answer: {answer}

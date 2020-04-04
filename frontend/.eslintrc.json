@@ -54,6 +54,7 @@
       1,
       { "extensions": [".js", ".jsx", ".ts", ".tsx"] }
     ],
+    "react/jsx-one-expression-per-line": "off",
     "react/prop-types": 0,
     "quotes": ["error", "single"],
     "comma-dangle": ["off", false]

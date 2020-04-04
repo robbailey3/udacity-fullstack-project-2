@@ -8,9 +8,6 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 module.exports = {
   // change to .tsx if necessary
   entry: './src/index.tsx',
-  output: {
-    filename: './dist/bundle.js'
-  },
   resolve: {
     // changed from extensions: [".js", ".jsx"]
     extensions: ['.ts', '.tsx', '.js', '.jsx']
@@ -48,7 +45,7 @@ module.exports = {
     splitChunks: {
       cacheGroups: {
         vendors: {
-          test: /[\\/]node_modules[\\/](?!d3)/,
+          test: /[\\/]node_modules[\\/]/,
           name: 'vendors',
           chunks: 'all'
         }
@@ -60,7 +57,7 @@ module.exports = {
       template: 'src/index.html',
       filename: 'index.html',
       chunksSortMode: 'auto',
-      chunks: ['main']
+      chunks: ['main', 'vendors']
     }),
     new CleanWebpackPlugin(),
     new CopyPlugin([

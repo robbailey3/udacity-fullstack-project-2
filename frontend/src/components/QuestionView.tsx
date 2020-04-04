@@ -57,7 +57,7 @@ class QuestionView extends React.Component {
   };
 
   public getByCategory(id: number) {
-    http.get(`/categories/${id}/questions`).subscribe({
+    http.get(`${this.URL_BASE}/categories/${id}/questions`).subscribe({
       next: (result) => {
         this.setState({
           questions: result.questions,
@@ -203,26 +203,38 @@ class QuestionView extends React.Component {
       return (
         <div className="question-view">
           <div className="categories-list">
-            <h2
+            <button
+              type="button"
               onClick={() => {
                 this.getQuestions();
               }}
             >
-              Categories
-            </h2>
+              <h2>Categories</h2>
+            </button>
             <ul>
               {categories.map((category, index) => (
-                <li
-                  key={category.id}
-                  onClick={() => {
-                    this.getByCategory(category.id);
-                  }}
-                >
-                  {category.type}
-                  <img
-                    className="category"
-                    src={`public/${category.type}.svg`}
-                  />
+                <li key={category.type}>
+                  <button
+                    key={category.id}
+                    className="button button-ghost"
+                    onClick={() => {
+                      this.getByCategory(category.id);
+                    }}
+                    onKeyUp={($event) => {
+                      if ($event.key === 'Enter') {
+                        this.getByCategory(category.id);
+                      }
+                    }}
+                    tabIndex={0}
+                    type="button"
+                  >
+                    {category.type}
+                    <img
+                      className="category"
+                      src={`public/${category.type}.svg`}
+                      alt={category.type}
+                    />
+                  </button>
                 </li>
               ))}
             </ul>
@@ -230,7 +242,7 @@ class QuestionView extends React.Component {
           </div>
           <div className="questions-list">
             <h2>Questions</h2>
-            {questions.map((q, ind) => (
+            {questions.map((q) => (
               <Question
                 key={q.id}
                 question={q.question}
