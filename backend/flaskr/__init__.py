@@ -161,21 +161,26 @@ def create_app(test_config=None):
   '''
     @app.route('/questions/search', methods=['POST'])
     def search_questions():
-        body = request.get_json()
-        search = body.get('search', None)
-        if (search is not None):
-            questions = Question.query.order_by(Question.id).filter(
-                Question.question.ilike('%{}%'.format(search)))
-            formatted_questions = [question.format()
-                                   for question in questions]
+        try:
+            body = request.get_json()
+            search = body.get('searchTerm', None)
+            if (search is not None):
+                questions = Question.query.order_by(Question.id).filter(
+                    Question.question.ilike('%{}%'.format(search)))
+                formatted_questions = [question.format()
+                                       for question in questions]
 
-            result = {
-                'success': True,
-                'questions': formatted_questions,
-                'total_questions': len(formatted_questions),
-                'current_category': None}
-            return jsonify(result)
-        return jsonify({"success": False})
+                result = {
+                    'success': True,
+                    'questions': formatted_questions,
+                    'total_questions': len(formatted_questions),
+                    'current_category': None}
+                return jsonify(result)
+            else:
+                abort(400)
+        except:
+            abort(500)
+
     '''
   @TODO:
   Create a GET endpoint to get questions based on category.
@@ -247,7 +252,7 @@ def create_app(test_config=None):
             if len(available_questions):
                 return jsonify({"success": True, "question": random.choice(available_questions), "timestamp": time()})
             else:
-                # Returns question set to None to end the game when no more questions available
+                # Returns que                                                stion set to None to end the game when no more question\s available
                 return jsonify({"success": True, "question": None, "timestamp": time()})
 
         except:
@@ -282,6 +287,13 @@ def create_app(test_config=None):
             "success": False,
             "error": str(error)
         }), 500
+
+    @app.errorhandler(400)
+    def malformed_error(error):
+        return jsonify({
+            "success": False,
+            "error": str(error)
+        }), 400
 
     return app
 

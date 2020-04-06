@@ -66,15 +66,9 @@ One note before you delve into your tasks: for each endpoint you are expected to
 8. Create a POST endpoint to get questions to play the quiz. This endpoint should take category and previous question parameters and return a random questions within the given category, if provided, and that is not one of the previous questions. 
 9. Create error handlers for all expected errors including 400, 404, 422 and 500. 
 
-REVIEW_COMMENT
+### API Documentation
+*Note for the reviewer*: Normally, I would leave documentation to a tool like swagger which can pull the documentation directly out of the code.
 ```
-This README is missing documentation of your endpoints. Below is an example for your endpoint to get all categories. Please use it as a reference for creating your documentation and resubmit your code. 
-
-Endpoints
-GET '/categories'
-GET ...
-POST ...
-DELETE ...
 
 GET '/categories'
 - Fetches a dictionary of categories in which the keys are the ids and the value is the corresponding string of the category
@@ -89,7 +83,68 @@ GET '/categories'
 
 ```
 
+```
+GET '/questions'
+- Fetches an array of questions
+{
+  "categories": [
+    {
+      "id": 1, 
+      "type": "Science"
+    }...
+  ], 
+  "current_category": null, 
+  "current_page": 1, 
+  "questions": [
+    {
+      "answer": "Tom Cruise", 
+      "category": 5, 
+      "difficulty": 4, 
+      "id": 4, 
+      "question": "What actor did author Anne Rice first denounce, then praise in the role of her beloved Lestat?"
+    } ...
+  ], 
+  "success": true, 
+  "timestamp": 1586175713154.5974, 
+  "total_questions": 23
+}
+```
 
+```
+POST '/questions/search'
+- Retrives questions which match a given search query. 
+- Post body should be JSON {"searchTerm": "Helo World"}
+- Returns the same format as GET 'questions'.
+```
+
+```
+GET '/categories/<int:category_id>/questions'
+- Retrives questions which are of the specified category_id. 
+```
+
+```
+DELETE 'questions/<int:id>'
+- Deletes a single question from the database
+- Returns { "success": true } if successful
+```
+
+```
+POST '/questions/play'
+- Retrieves a random single question 
+- If you wish to filter by category, send {"quizCategory": <int:category_id>} in the POST body
+```
+
+``` 
+POST '/questions'
+- Adds a new Question to the database
+- Body should be in the format:
+{
+  "question": String,
+  "answer": String,
+  "difficulty": Integer,
+  "category": Integer
+}
+```
 ## Testing
 To run the tests, run
 ```

@@ -1,6 +1,9 @@
 import * as React from 'react';
+import QuestionView from './QuestionView';
 
 class Search extends React.Component {
+  private readonly URL_BASE = 'http://localhost:5000';
+
   public search: any;
 
   constructor(public props: any, public state: any) {
@@ -15,17 +18,17 @@ class Search extends React.Component {
     event.preventDefault();
     const { query } = this.state;
     const { submitSearch } = this.props;
-    submitSearch(query);
+    submitSearch.call(this, query);
   };
 
-  handleInputChange = () => {
+  public handleInputChange = () => {
     this.setState({
       query: this.search.value
     });
   };
 
   // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
-  render() {
+  public render() {
     return (
       <form onSubmit={this.getInfo}>
         <input

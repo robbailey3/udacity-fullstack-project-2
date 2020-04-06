@@ -83,8 +83,16 @@ class QuestionView extends React.Component {
   }
 
   public submitSearch(searchTerm) {
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
     http
-      .post(`${this.URL_BASE}/questions`, JSON.stringify({ searchTerm }))
+      .post(
+        `${this.URL_BASE}/questions/search`,
+        JSON.stringify({ searchTerm }),
+        {
+          headers
+        }
+      )
       .subscribe({
         next: (result) => {
           this.setState({
@@ -185,7 +193,11 @@ class QuestionView extends React.Component {
           className={`page-num ${i === page ? 'active' : ''}`}
           role="link"
           tabIndex={0}
-          onKeyDown={() => {}}
+          onKeyDown={($event) => {
+            if ($event.key === 'Enter') {
+              this.selectPage(i);
+            }
+          }}
           onClick={() => {
             this.selectPage(i);
           }}
@@ -198,6 +210,7 @@ class QuestionView extends React.Component {
   }
 
   public render() {
+    console.log('RENDERING');
     const { isLoaded, categories, questions } = this.state;
     if (isLoaded) {
       return (
