@@ -13,11 +13,9 @@
     "rxjs": "^6.5.4"
   },
   "scripts": {
-    "start": "node node_modules/react-scripts/scripts/start.js",
-    "start:webpack": "webpack-dev-server",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start": "webpack-dev-server",
+    "build": "webpack",
+    "test": "jest"
   },
   "browserslist": {
     "production": [
